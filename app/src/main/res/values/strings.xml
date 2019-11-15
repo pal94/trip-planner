@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Trip Planner</string>
+    <string name="tvWelcome">TRIP PLANNER</string>
+    <string name="etEmail">Email</string>
+    <string name="etPassword">Password</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnSignUp">Sign Up</string>
+    <string name="etFirst">First Name</string>
+    <string name="etLast">Last Name</string>
+    <string name="rbMale">Male</string>
+    <string name="rbFemale">Female</string>
+    <string name="etPass2">Confirm Password</string>
+</resources>
