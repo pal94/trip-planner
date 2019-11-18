@@ -17,4 +17,9 @@
     <string name="btnFindFriend">Find Friends</string>
     <string name="btnChat">Chat</string>
     <string name="mytrips">My Trips</string>
+    <string name="fullname">Name:</string>
+    <string name="gender">Gender:</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout">Logout</string>
 </resources>
