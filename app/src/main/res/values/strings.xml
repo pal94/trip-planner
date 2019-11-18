@@ -22,4 +22,5 @@
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="logout">Logout</string>
+    <string name="update">Update</string>
 </resources>
