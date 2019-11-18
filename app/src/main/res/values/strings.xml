@@ -10,4 +10,11 @@
     <string name="rbMale">Male</string>
     <string name="rbFemale">Female</string>
     <string name="etPass2">Confirm Password</string>
+    <string name="btncreate">Create A New Trip</string>
+    <string name="btnfind">Find A Trip</string>
+    <string name="tvTrips">TRIPS</string>
+    <string name="tvSocial">CONNECT WITH PEOPLE</string>
+    <string name="btnFindFriend">Find Friends</string>
+    <string name="btnChat">Chat</string>
+    <string name="mytrips">My Trips</string>
 </resources>
