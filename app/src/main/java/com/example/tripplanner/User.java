@@ -3,6 +3,8 @@ package com.example.tripplanner;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements Serializable {
     String first,last,email,password,gender,avatar;
@@ -14,5 +16,28 @@ public class User implements Serializable {
         this.password = password;
         this.gender = gender;
         this.avatar = avatar;
+    }
+
+    public Map toHashMap(){
+        Map<String, Object> user = new HashMap<>();
+        user.put("firstName",this.first);
+        user.put("lastName",this.last);
+        user.put("email",this.email);
+        user.put("password",this.password);
+        user.put("gender",this.gender);
+        user.put("avatar",this.avatar);
+        return user;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "first='" + first + '\'' +
+                ", last='" + last + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

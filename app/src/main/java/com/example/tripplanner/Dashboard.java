@@ -32,6 +32,14 @@ public class Dashboard extends AppCompatActivity {
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
+        setAvatar(loggedUser.avatar);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
@@ -39,11 +47,11 @@ public class Dashboard extends AppCompatActivity {
         getSupportActionBar().setTitle("Dashboard");
 
         prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
+
+        String json = prefsEditor.getString("userObject","");
         editor = prefsEditor.edit();
 
-        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
         loggedUser = gson.fromJson(json, User.class);
-
 
         iv = findViewById(R.id.imageViewProfile);
         setAvatar(loggedUser.avatar);

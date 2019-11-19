@@ -1,13 +1,22 @@
 package com.example.tripplanner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import static com.example.tripplanner.R.drawable.male1;
@@ -18,7 +27,9 @@ public class Profile extends AppCompatActivity {
     User loggedUser;
     ImageView iv;
     Gson gson = new Gson();
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences prefsEditor;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +38,11 @@ public class Profile extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Profile");
 
-        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
+
+        String json = prefsEditor.getString("userObject","");
+        editor = prefsEditor.edit();
+
         loggedUser = gson.fromJson(json, User.class);
 
         name = findViewById(R.id.tvNameProfile);
@@ -39,7 +54,38 @@ public class Profile extends AppCompatActivity {
         gender.setText(loggedUser.gender);
         email.setText(loggedUser.email);
 
-        switch(loggedUser.avatar){
+        setAvatar(loggedUser.avatar);
+
+        findViewById(R.id.buttonCancle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this,Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this,EditProfile.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String json = prefsEditor.getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
+        setAvatar(loggedUser.avatar);
+    }
+
+    public void setAvatar(String avatar){
+        switch(avatar){
             case "male1":
                 iv.setImageResource(male1);
                 break;
@@ -71,21 +117,5 @@ public class Profile extends AppCompatActivity {
                 iv.setImageResource(R.drawable.female5);
                 break;
         }
-
-        findViewById(R.id.buttonCancle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this,EditProfile.class);
-                startActivity(intent);
-            }
-        });
-
     }
 }

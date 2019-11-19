@@ -8,53 +8,53 @@
 
     <ImageView
         android:id="@+id/imageViewProfileEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="111dp"
         android:layout_marginTop="68dp"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_launcher_background" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextFirstEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="@string/etFirst"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/imageViewProfileEdit"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/imageViewProfileEdit"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewProfileEdit"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfileEdit" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextLastEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/etLast"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="@+id/editTextFirstEdit"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toStartOf="@+id/editTextFirstEdit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstEdit" />
 
     <RadioGroup
         android:id="@+id/rgGenderEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2">
+        app:layout_constraintEnd_toEndOf="@+id/editTextLastEdit"
+        app:layout_constraintStart_toStartOf="@+id/editTextLastEdit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailEdit">
 
         <RadioButton
             android:id="@+id/radioButtonMaleEdit"
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:text="@string/update"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgGenderEdit" />
@@ -88,4 +88,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonUpdate"
         app:layout_constraintTop_toTopOf="@+id/buttonUpdate" />
+
+    <EditText
+        android:id="@+id/editTextEmailEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/etEmail"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextLastEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextLastEdit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastEdit" />
 </androidx.constraintlayout.widget.ConstraintLayout>
