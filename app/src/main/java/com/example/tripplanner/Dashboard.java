@@ -32,6 +32,8 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        getSupportActionBar().setTitle("Dashboard");
+
         final Bundle fromMainActivity = getIntent().getExtras().getBundle("mainActivity");
         user = (User) fromMainActivity.getSerializable("user");
 
@@ -41,7 +43,6 @@ public class Dashboard extends AppCompatActivity {
         findViewById(R.id.buttonFindFriends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getUsers();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user",user);
                 Intent intent = new Intent(Dashboard.this,FindFriends.class);
@@ -50,25 +51,14 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void getUsers(){
-
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        findViewById(R.id.imageViewProfile).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                QuerySnapshot queryDocumentSnapshots = task.getResult();
-                if(!queryDocumentSnapshots.isEmpty()){
-                    List<DocumentSnapshot> users = queryDocumentSnapshots.getDocuments();
-//                    Log.d("demo", "onComplete: "+users.get(0).getString(""));
-
-                    for (int i = 0; i < users.size();i++){
-                        User user = new User(users.get(i).getString("firstName"),users.get(i).getString("lastName"),users.get(i).getString("email"),users.get(i).getString("password"),users.get(i).getString("gender"),users.get(i).getString("avatar"));
-                        user_list.add(user);
-                    }
-
-
-                }
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user",user);
+                Intent intent = new Intent(Dashboard.this,Profile.class);
+                intent.putExtra("dashboard",bundle);
+                startActivity(intent);
             }
         });
 

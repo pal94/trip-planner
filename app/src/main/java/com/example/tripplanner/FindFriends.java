@@ -28,6 +28,9 @@ public class FindFriends extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
 
+        getSupportActionBar().setTitle("Find Friends");
+
+
         final Bundle fromMainActivity = getIntent().getExtras().getBundle("dashboard");
         loggedUser = (User) fromMainActivity.getSerializable("user");
 
@@ -37,7 +40,6 @@ public class FindFriends extends AppCompatActivity {
                 QuerySnapshot queryDocumentSnapshots = task.getResult();
                 if(!queryDocumentSnapshots.isEmpty()){
                     List<DocumentSnapshot> users = queryDocumentSnapshots.getDocuments();
-//                    Log.d("demo", "onComplete: "+users.get(0).getString(""));
 
                     for (int i = 0; i < users.size();i++){
                         if(!users.get(i).getString("email").equals(loggedUser.email)) {
@@ -45,8 +47,6 @@ public class FindFriends extends AppCompatActivity {
                             user_list.add(user);
                         }
                     }
-
-                    Log.d("demo", "onComplete: "+user_list);
 
                     ListView listView = findViewById(R.id.listView);
                     UserListAdapter adapter = new UserListAdapter(FindFriends.this,R.layout.user_list_item,user_list);

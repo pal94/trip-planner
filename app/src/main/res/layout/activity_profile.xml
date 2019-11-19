@@ -7,12 +7,11 @@
     tools:context=".Profile">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:id="@+id/ivProfile"
+        android:layout_width="107dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -22,14 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="40dp"
         android:text="@string/fullname"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
 
     <TextView
         android:id="@+id/textViewGender"
@@ -45,21 +44,22 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewFullName" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFullName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toEndOf="@+id/textViewFullName"
         app:layout_constraintTop_toTopOf="@+id/textViewFullName" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvGenderProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewGender"
@@ -69,33 +69,48 @@
 
     <Button
         android:id="@+id/buttonEdit"
-        android:layout_width="133dp"
+        android:layout_width="281dp"
         android:layout_height="46dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:text="@string/edit"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCancle"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewGender"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmailProfile" />
 
     <Button
         android:id="@+id/buttonCancle"
-        android:layout_width="133dp"
+        android:layout_width="281dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="76dp"
         android:text="@string/cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonEdit" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="281dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/logout"
-        app:layout_constraintEnd_toEndOf="@+id/buttonCancle"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="@+id/buttonEdit"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonEdit"
         app:layout_constraintTop_toBottomOf="@+id/buttonEdit" />
+
+    <TextView
+        android:id="@+id/textViewEmailProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/email"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewGender"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGender" />
+
+    <TextView
+        android:id="@+id/tvEmailProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfile"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmailProfile"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmailProfile" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
