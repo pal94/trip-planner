@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import static com.example.tripplanner.R.drawable.male1;
 
 public class Profile extends AppCompatActivity {
@@ -15,14 +17,18 @@ public class Profile extends AppCompatActivity {
     TextView name,gender,email;
     User loggedUser;
     ImageView iv;
+    Gson gson = new Gson();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final Bundle fromMainActivity = getIntent().getExtras().getBundle("dashboard");
-        loggedUser = (User) fromMainActivity.getSerializable("user");
+        getSupportActionBar().setTitle("Profile");
+
+        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
 
         name = findViewById(R.id.tvNameProfile);
         gender = findViewById(R.id.tvGenderProfile);
@@ -76,10 +82,7 @@ public class Profile extends AppCompatActivity {
         findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",loggedUser);
                 Intent intent = new Intent(Profile.this,EditProfile.class);
-                intent.putExtra("profile",bundle);
                 startActivity(intent);
             }
         });

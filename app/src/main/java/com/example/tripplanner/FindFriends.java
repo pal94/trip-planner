@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class FindFriends extends AppCompatActivity {
     User loggedUser,user;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<User> user_list = new ArrayList<>();
+    Gson gson = new Gson();
 
 
     @Override
@@ -30,9 +32,9 @@ public class FindFriends extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Find Friends");
 
+        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
 
-        final Bundle fromMainActivity = getIntent().getExtras().getBundle("dashboard");
-        loggedUser = (User) fromMainActivity.getSerializable("user");
 
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

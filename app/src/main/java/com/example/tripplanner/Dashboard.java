@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,12 @@ import static com.example.tripplanner.R.drawable.male1;
 
 public class Dashboard extends AppCompatActivity {
 
-    User user;
+    User loggedUser;
     ImageView iv;
-    ArrayList<User> user_list = new ArrayList<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Gson gson = new Gson();
+    SharedPreferences prefsEditor;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +38,20 @@ public class Dashboard extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Dashboard");
 
-        final Bundle fromMainActivity = getIntent().getExtras().getBundle("mainActivity");
-        user = (User) fromMainActivity.getSerializable("user");
+        prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
+        editor = prefsEditor.edit();
+
+        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
+
 
         iv = findViewById(R.id.imageViewProfile);
-        setAvatar(user.avatar);
+        setAvatar(loggedUser.avatar);
 
         findViewById(R.id.buttonFindFriends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",user);
                 Intent intent = new Intent(Dashboard.this,FindFriends.class);
-                intent.putExtra("dashboard",bundle);
                 startActivity(intent);
             }
         });
@@ -54,11 +59,19 @@ public class Dashboard extends AppCompatActivity {
         findViewById(R.id.imageViewProfile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",user);
                 Intent intent = new Intent(Dashboard.this,Profile.class);
-                intent.putExtra("dashboard",bundle);
                 startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.imageViewLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(Dashboard.this,MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
