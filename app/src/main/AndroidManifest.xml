@@ -13,12 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectAvatar">
-        </activity>
+        <activity android:name=".FindFriends"></activity>
+        <activity android:name=".SelectAvatar"></activity>
         <activity android:name=".CreateATrip" />
         <activity android:name=".EditProfile" />
         <activity android:name=".Profile" />
-        <activity android:name=".dashboard" />
+        <activity android:name=".Dashboard" />
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity">
             <intent-filter>
