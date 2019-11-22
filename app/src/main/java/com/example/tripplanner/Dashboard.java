@@ -87,6 +87,13 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.buttonMyTrips).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, MyTrips.class);
+                startActivity(intent);
+            }
+        });
 
         findViewById(R.id.imageViewProfile).setOnClickListener(new View.OnClickListener() {
             @Override
