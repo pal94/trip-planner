@@ -1,6 +1,7 @@
 package com.example.tripplanner;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,40 +16,41 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MyTripAdapter extends ArrayAdapter<Trip> {
-    public MyTripAdapter(@NonNull Context context, int resource, @NonNull List<Trip> objects) {
-        super(context, resource, objects);
+public class MyTripAdapter extends ArrayAdapter<Trips> {
+
+    public MyTripAdapter(@NonNull Context context, int resource, @NonNull List<Trips> objects) {
+        super(context,resource,objects);
     }
 
-    @NonNull
+
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Trip trip = getItem(position);
+        Trips trips = getItem(position);
         ViewHolder viewHolder;
 
         if(convertView==null){
-            convertView= LayoutInflater.from(getContext()).inflate(R.layout.activity_trip_details,parent,false);
+            convertView= LayoutInflater.from(getContext()).inflate(R.layout.trip_list_item,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.textViewTitle=convertView.findViewById(R.id.tvTitleDetail);
-            viewHolder.ivCoverpic=convertView.findViewById(R.id.tvImageDetail);
+            viewHolder.textViewTitle=convertView.findViewById(R.id.listTitle);
+            viewHolder.textViewCreator=convertView.findViewById(R.id.textViewCreator);
+            viewHolder.iv=convertView.findViewById(R.id.listCoverImage);
             convertView.setTag(viewHolder);
         }
         else{
             viewHolder= (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.textViewTitle.setText(trip.title);
-        Picasso.get().load(trip.url).into(viewHolder.ivCoverpic);
-
+        viewHolder.textViewTitle.setText(trips.title);
+        viewHolder.textViewCreator.setText(trips.name);
+        Picasso.get().load(trips.cover_image).into(viewHolder.iv);
 
         return convertView;
-
 
     }
 
     public static class ViewHolder{
-        TextView textViewTitle;
-        ImageView ivCoverpic;
+        TextView textViewTitle,textViewCreator;
+        ImageView iv;
     }
 }
 

@@ -3,7 +3,9 @@ package com.example.tripplanner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,59 +20,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindTrips extends AppCompatActivity {
+
     User loggedUser;
-    Trip trip;
-    ArrayList<Trip> my_trip_list = new ArrayList<>();
-    List<String> emails = new ArrayList<>();
+    String TAG = "demo";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    ProgressDialog mProgressDialog;
     Gson gson = new Gson();
-    ArrayList<String> jointList;
-    List<String> mytrips = new ArrayList<>();
-
+    ArrayList<Trips> myTrips;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_trips);
+        myTrips = new ArrayList<>();
 
-        db.collection("trip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                final QuerySnapshot querySnapshot = task.getResult();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Finding trips...");
+        mProgressDialog.show();
 
-                if(!querySnapshot.isEmpty()) {
-                    db.collection("users").document(loggedUser.email).collection("myTrip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            QuerySnapshot querySnapshot1 = task.getResult();
-                            List<DocumentSnapshot> list = querySnapshot1.getDocuments();
-                            for(int j=0; j<list.size();j++){
-                                String tripids = list.get(j).getString("tripId");
-                                mytrips.add(tripids);
+
+        getSupportActionBar().setTitle("Find Trips");
+        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        loggedUser = gson.fromJson(json, User.class);
+
+        db.collection("trip")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+
+                                if(!queryDocumentSnapshot.getString("Emailofuser").equals(loggedUser.email)) {
+                                    Trips trip = new Trips();
+                                    trip.creator = queryDocumentSnapshot.getString("Emailofuser");
+                                    trip.latitude = queryDocumentSnapshot.getDouble("latitude");
+                                    trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                    trip.title = queryDocumentSnapshot.getString("title");
+                                    trip.cover_image = queryDocumentSnapshot.getString("url");
+                                    trip.name = queryDocumentSnapshot.getString("creator");
+
+
+                                    List<String> addedUsers = (List<String>) queryDocumentSnapshot.get("addedUsers");
+                                    trip.added_users = addedUsers;
+                                    myTrips.add(trip);
+                                }
                             }
-                            }
-                        });
-                    }
-
-                    List<DocumentSnapshot> trips = querySnapshot.getDocuments();
-                    for(int i =0; i<trips.size();i++){
-                            if(!trips.get(i).getString("Emailofuser").equals(loggedUser.email)){
-                                Trip trip = new Trip(trips.get(i).getString("title"), trips.get(i).getDouble("latitude"), trips.get(i).getDouble("longitude"), trips.get(i).getString("url"));
-                                my_trip_list.add(trip);
                         }
-
+                        mProgressDialog.dismiss();
+                        ListView listView = findViewById(R.id.listViewFindTrips);
+                        MyTripAdapter adapter = new MyTripAdapter(FindTrips.this,R.layout.trip_list_item,myTrips);
+                        listView.setAdapter(adapter);
                     }
-                    ListView lvmytrips = findViewById(R.id.lvtrips);
-                    MyTripAdapter adapter = new MyTripAdapter(FindTrips.this, R.layout.find_trip_details,my_trip_list);
-                    lvmytrips.setAdapter(adapter);
-
-                }
-            });
-
-        }
+                });
 
 
 
+    }
     }
 

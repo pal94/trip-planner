@@ -1,11 +1,12 @@
 package com.example.tripplanner;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Trips {
-    String creator,title,cover_image;
+    String creator,title,cover_image,name;
     Double latitude,longitude;
-    String[] added_users;
+    List<String> added_users;
 
     @Override
     public String toString() {
@@ -15,7 +16,7 @@ public class Trips {
                 ", cover_image='" + cover_image + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", added_users=" + Arrays.toString(added_users) +
+                ", added_users=" + added_users +
                 '}';
     }
 }
