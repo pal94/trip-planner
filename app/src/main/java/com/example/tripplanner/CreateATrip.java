@@ -89,11 +89,11 @@ public class CreateATrip extends AppCompatActivity {
                                     Log.d("ids", ids.toString());
                                     Map<String, Object> mtrips = new HashMap<>();
                                     mtrips.put("tripId", tripId);
-                                    db.collection("users").document(loggedUser.email).collection("myTrip").add(mtrips).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                    db.collection("users").document(loggedUser.email).collection("myTrip").document(tripId).set(mtrips).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-                                                Log.d("Trip ADded", "Added Trip to user");
+                                                Log.d("TAG", "Trip Created");
                                             }
                                         }
                                     });

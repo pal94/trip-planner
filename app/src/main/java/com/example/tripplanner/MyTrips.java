@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,21 +45,44 @@ public class MyTrips extends AppCompatActivity {
         String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
         loggedUser = gson.fromJson(json, User.class);
 
-        db.collection("users").document(loggedUser.email).collection("myTrip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                QuerySnapshot querySnapshot = task.getResult();
-                if(!querySnapshot.isEmpty())
-                {
-                    List<DocumentSnapshot> mytrips = querySnapshot.getDocuments();
-                    jointList= new ArrayList<>();
-                    for(int i=0; i< mytrips.size();i++){
-                        jointList.add(mytrips.get(i).getString("tripId"));
-                    }
-                }
+        db.collection("users").document(loggedUser.email).
+                collection("myTrip").
+                get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot documentSnapshot: task.getResult()){
+                                String tripid= documentSnapshot.getString("tripId");
+                                jointList.add(tripid);
+                            }
+                        }
 
-            }
-        });
+                    }
+                });
+
+//        db.collection("users").document(loggedUser.email).collection("myTrip").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots)
+//                {
+//                    if(!queryDocumentSnapshots.isEmpty())
+//                    {
+//                        jointList= new ArrayList<>();
+//                        String tripid= (String) queryDocumentSnapshot.getData().get("tripId");
+//                        jointList.add(tripid);
+////                        List<DocumentSnapshot> mytrips = queryDocumentSnapshots.getDocuments();
+//
+////                        for(int i=0; i< mytrips.size();i++){
+////                            jointList.add(mytrips.get(i).getString("tripId"));
+////                            Log.d("JOINT LIST", jointList.toString());
+////                        }
+//                    }
+//                }
+//
+//            }
+//        });
+
 
         db.collection("trip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -68,8 +92,8 @@ public class MyTrips extends AppCompatActivity {
                 if(!querySnapshot.isEmpty()) {
                     List<DocumentSnapshot> trips = querySnapshot.getDocuments();
                     for(int i =0; i<trips.size();i++){
-                        for(String id : jointList){
-                            if(trips.get(i).getString("Emailofuser").equals(loggedUser.email) && trips.get(i).getId().equals(id)){
+                        for(int j=0; j<jointList.size();j++){
+                            if(trips.get(i).getString("Emailofuser").equals(loggedUser.email) && jointList.contains(trips.get(i).getId())){
                                 Trip trip = new Trip(trips.get(i).getString("title"), trips.get(i).getDouble("latitude"), trips.get(i).getDouble("longitude"), trips.get(i).getString("url"));
                                 my_trip_list.add(trip);
                             }
