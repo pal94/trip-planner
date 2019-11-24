@@ -62,6 +62,7 @@ public class MyTrips extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
 
                                 String email = queryDocumentSnapshot.getString("Emailofuser");
+                                List<String> addedUsers = (List<String>) queryDocumentSnapshot.get("addedUsers");
                                 if(email.equals(loggedUser.email)) {
                                     Trips trip = new Trips();
                                     trip.creator = queryDocumentSnapshot.getString("Emailofuser");
@@ -72,9 +73,23 @@ public class MyTrips extends AppCompatActivity {
                                     trip.name = queryDocumentSnapshot.getString("creator");
 
 
-                                    List<String> addedUsers = (List<String>) queryDocumentSnapshot.get("addedUsers");
                                     trip.added_users = addedUsers;
                                     myTrips.add(trip);
+                                }
+                                for(String userEmail:addedUsers){
+                                    if(userEmail.equals(loggedUser.email)){
+                                        Trips trip = new Trips();
+                                        trip.creator = queryDocumentSnapshot.getString("Emailofuser");
+                                        trip.latitude = queryDocumentSnapshot.getDouble("latitude");
+                                        trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                        trip.title = queryDocumentSnapshot.getString("title");
+                                        trip.cover_image = queryDocumentSnapshot.getString("url");
+                                        trip.name = queryDocumentSnapshot.getString("creator");
+
+
+                                        trip.added_users = addedUsers;
+                                        myTrips.add(trip);
+                                    }
                                 }
                             }
                         }

@@ -54,19 +54,37 @@ public class FindTrips extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
 
-                                if(!queryDocumentSnapshot.getString("Emailofuser").equals(loggedUser.email)) {
-                                    Trips trip = new Trips();
-                                    trip.creator = queryDocumentSnapshot.getString("Emailofuser");
-                                    trip.latitude = queryDocumentSnapshot.getDouble("latitude");
-                                    trip.longitude = queryDocumentSnapshot.getDouble("longitude");
-                                    trip.title = queryDocumentSnapshot.getString("title");
-                                    trip.cover_image = queryDocumentSnapshot.getString("url");
-                                    trip.name = queryDocumentSnapshot.getString("creator");
-
-
+                                if (!queryDocumentSnapshot.getString("Emailofuser").equals(loggedUser.email)) {
                                     List<String> addedUsers = (List<String>) queryDocumentSnapshot.get("addedUsers");
-                                    trip.added_users = addedUsers;
-                                    myTrips.add(trip);
+
+                                    if(addedUsers.isEmpty()){
+                                        Trips trip = new Trips();
+                                        trip.creator = queryDocumentSnapshot.getString("Emailofuser");
+                                        trip.latitude = queryDocumentSnapshot.getDouble("latitude");
+                                        trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                        trip.title = queryDocumentSnapshot.getString("title");
+                                        trip.cover_image = queryDocumentSnapshot.getString("url");
+                                        trip.name = queryDocumentSnapshot.getString("creator");
+
+                                        trip.added_users = addedUsers;
+                                        myTrips.add(trip);
+                                    } else {
+//                                        Boolean alreadyExists = false;
+
+                                        if(!addedUsers.contains(loggedUser.email)) {
+                                            Trips trip = new Trips();
+                                                trip.creator = queryDocumentSnapshot.getString("Emailofuser");
+                                                trip.latitude = queryDocumentSnapshot.getDouble("latitude");
+                                                trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                                trip.title = queryDocumentSnapshot.getString("title");
+                                                trip.cover_image = queryDocumentSnapshot.getString("url");
+                                                trip.name = queryDocumentSnapshot.getString("creator");
+
+                                                trip.added_users = addedUsers;
+                                                myTrips.add(trip);
+                                        }
+                                        }
+
                                 }
                             }
                         }

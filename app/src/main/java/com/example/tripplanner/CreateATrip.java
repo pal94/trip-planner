@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,42 +75,28 @@ public class CreateATrip extends AppCompatActivity {
                 Picasso.get().load(url).into(coverpic);
                 emailofuser=loggedUser.email;
 
+                List<String> addedUsers = new ArrayList<>();
                 Map<String, Object> tripdetails = new HashMap<>();
                 tripdetails.put("title", title);
                 tripdetails.put("latitude", latitude);
                 tripdetails.put("longitude", longitude);
                 tripdetails.put("url", url);
                 tripdetails.put("Emailofuser", emailofuser);
-                db.collection("trip").add(tripdetails)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                tripdetails.put("creator",loggedUser.first+" "+loggedUser.last);
+                tripdetails.put("addedUsers",addedUsers);
+                db.collection("trip")
+                        .document(title)
+                        .set(tripdetails)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if(task.isSuccessful()){
-                                    ArrayList<String> ids = new ArrayList<>();
-                                    DocumentReference documentSnapshot = task.getResult();
-                                    tripId=documentSnapshot.getId();
-                                    ids.add(tripId);
-                                    Log.d("ids", ids.toString());
-                                    Map<String, Object> mtrips = new HashMap<>();
-                                    mtrips.put("tripId", tripId);
-                                    db.collection("users").document(loggedUser.email).collection("myTrip").document(tripId).set(mtrips).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Log.d("TAG", "Trip Created");
-                                            }
-                                        }
-                                    });
-                                    Intent intent = new Intent(CreateATrip.this, Dashboard.class);
-                                    startActivity(intent);
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(!task.isSuccessful()){
+                                    Log.d("demo", "ERROR SAVING TO FIRESTORE");
                                 }
-                                else{
-                                    Log.d("TAG", "Trip could not be created");
-                                }
+                                Intent intent = new Intent(CreateATrip.this,Dashboard.class);
+                                startActivity(intent);
                             }
                         });
-
-
 
             }
         });

@@ -19,12 +19,16 @@ import java.util.List;
 
 public class ChatList extends AppCompatActivity {
 
+    Trips trip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
 
-        getSupportActionBar().setTitle("Group Chat");
+        final Bundle tripData = getIntent().getExtras().getBundle("tripData");
+        trip = (Trips) tripData.getSerializable("trip");
+
+        getSupportActionBar().setTitle("Group Chat - "+trip.title);
 
     }
 }

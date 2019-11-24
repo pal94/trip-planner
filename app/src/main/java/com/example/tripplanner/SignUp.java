@@ -43,10 +43,7 @@ public class SignUp extends AppCompatActivity {
     RadioButton gender;
     String avatar;
     ImageView iv;
-    Bitmap bitmapUpload = null;
-//    Bitmap imageBitmap;
     String TAG = "demo";
-    ProgressBar progressBar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
