@@ -60,9 +60,7 @@ public class MyTrips extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
 
                                 String email = queryDocumentSnapshot.getString("Emailofuser");
-                                Log.d(TAG, "onComplete: "+email);
                                 if(email.equals(loggedUser.email)) {
-                                    Log.d(TAG, "FOUND MATCH");
                                     Trips trip = new Trips();
                                     trip.creator = queryDocumentSnapshot.getString("Emailofuser");
                                     trip.latitude = queryDocumentSnapshot.getDouble("latitude");

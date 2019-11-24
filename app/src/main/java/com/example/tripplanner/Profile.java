@@ -95,12 +95,12 @@ public class Profile extends AppCompatActivity {
             case "male3":
                 iv.setImageResource(R.drawable.male3);
                 break;
-//            case "male4":
-//                iv.setImageResource(R.drawable.male4);
-//                break;
-//            case "male5":
-//                iv.setImageResource(R.drawable.male5);
-//                break;
+            case "male4":
+                iv.setImageResource(R.drawable.male4);
+                break;
+            case "male5":
+                iv.setImageResource(R.drawable.male5);
+                break;
             case "female1":
                 iv.setImageResource(R.drawable.female1);
                 break;
@@ -110,12 +110,12 @@ public class Profile extends AppCompatActivity {
             case "female3":
                 iv.setImageResource(R.drawable.female3);
                 break;
-//            case "female4":
-//                iv.setImageResource(R.drawable.female4);
-//                break;
-//            case "female5":
-//                iv.setImageResource(R.drawable.female5);
-//                break;
+            case "female4":
+                iv.setImageResource(R.drawable.female4);
+                break;
+            case "female5":
+                iv.setImageResource(R.drawable.female5);
+                break;
         }
     }
 }
