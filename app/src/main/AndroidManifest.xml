@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tripplanner">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -16,6 +18,8 @@
         <activity android:name=".ChatList"></activity>
         <activity android:name=".FindFriends" />
         <activity android:name=".SelectAvatar" />
+        <activity android:name=".FindTrips"></activity>
+        <activity android:name=".MyTrips" />
         <activity android:name=".CreateATrip" />
         <activity android:name=".EditProfile" />
         <activity android:name=".Profile" />
