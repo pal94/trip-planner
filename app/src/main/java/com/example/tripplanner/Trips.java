@@ -1,9 +1,10 @@
 package com.example.tripplanner;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Trips {
+public class Trips implements Serializable {
     String creator,title,cover_image,name;
     Double latitude,longitude;
     List<String> added_users;

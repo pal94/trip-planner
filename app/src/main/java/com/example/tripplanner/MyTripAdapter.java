@@ -44,6 +44,8 @@ public class MyTripAdapter extends ArrayAdapter<Trips> {
         viewHolder.textViewCreator.setText(trips.name);
         Picasso.get().load(trips.cover_image).into(viewHolder.iv);
 
+
+
         return convertView;
 
     }

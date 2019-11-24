@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -34,6 +35,7 @@ public class MyTrips extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     Gson gson = new Gson();
     ArrayList<Trips> myTrips;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +79,25 @@ public class MyTrips extends AppCompatActivity {
                             }
                         }
                         mProgressDialog.dismiss();
-                        ListView listView = findViewById(R.id.myTripsListView);
+                        listView = findViewById(R.id.myTripsListView);
                         MyTripAdapter adapter = new MyTripAdapter(MyTrips.this,R.layout.trip_list_item,myTrips);
                         listView.setAdapter(adapter);
+
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(MyTrips.this,TripPage.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("trip", myTrips.get(position));
+                                intent.putExtra("tripData", bundle);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
+
+
+
 
 
     }

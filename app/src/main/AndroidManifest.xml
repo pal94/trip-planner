@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatList"></activity>
+        <activity android:name=".FindTripPage"></activity>
+        <activity android:name=".TripPage" />
+        <activity android:name=".ChatList" />
         <activity android:name=".FindFriends" />
         <activity android:name=".SelectAvatar" />
-        <activity android:name=".FindTrips"></activity>
+        <activity android:name=".FindTrips" />
         <activity android:name=".MyTrips" />
         <activity android:name=".CreateATrip" />
         <activity android:name=".EditProfile" />
