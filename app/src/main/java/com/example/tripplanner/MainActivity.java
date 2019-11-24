@@ -13,9 +13,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        createChats();
+//        Date date= new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        Log.d(TAG, "onCreate: "+formatter.format(date));
+//        Log.d(TAG, "onCreate: "+date);
+
 
         prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
         editor = prefsEditor.edit();
@@ -95,6 +108,37 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             Log.d(TAG, "No such document");
+                        }
+                    }
+                });
+    }
+
+    public void createChats(){
+
+        Date date= new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        Map<String, Object> chat = new HashMap<>();
+        chat.put("time",formatter.format(date));
+        chat.put("message","How does 12th December sound?");
+        chat.put("from","priya@test.dev");
+
+        db.collection("chats")
+                .document("priya@test.dev")
+                .collection("messages")
+                .document("shrav@test.dev")
+                .collection("messages")
+                .document(""+formatter.format(date))
+                .set(chat)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d("demo", "onComplete");
+                            //write logic here
+                            finish();
+                        } else {
+                            Log.d("demo", ""+task.getException().toString());
                         }
                     }
                 });

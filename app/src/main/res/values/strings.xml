@@ -24,4 +24,6 @@
     <string name="logout">Logout</string>
     <string name="update">Update</string>
     <string name="email">Email:</string>
+    <string name="send">Send</string>
+    <string name="chatbox">Enter message</string>
 </resources>

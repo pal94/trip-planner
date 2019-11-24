@@ -83,6 +83,16 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.buttonCreateTrip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this,CreateATrip.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
     }
 
     private void setAvatar(String id){

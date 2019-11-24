@@ -31,7 +31,6 @@ public class EditProfile extends AppCompatActivity {
     ImageView iv;
     RadioGroup rg;
     RadioButton male,female,gender;
-    String updatedAvatar;
     FirebaseFirestore db;
     SharedPreferences prefsEditor;
     SharedPreferences.Editor editor;
@@ -70,7 +69,6 @@ public class EditProfile extends AppCompatActivity {
             female.setChecked(true);
         }
 
-//        updatedAvatar = loggedUser.avatar;
         setAvatar(loggedUser.avatar);
 
         iv.setOnClickListener(new View.OnClickListener() {
