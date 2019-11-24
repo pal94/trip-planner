@@ -45,19 +45,48 @@ public class MyTrips extends AppCompatActivity {
         String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
         loggedUser = gson.fromJson(json, User.class);
 
-        db.collection("users").document(loggedUser.email).
-                collection("myTrip").
-                get()
+//        db.collection("trip")
+//                .document()
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            for(DocumentSnapshot documentSnapshot: task.getResult()){
+//                                Log.d("demo", "onComplete: "+documentSnapshot.getData());
+////                                String tripid= documentSnapshot.getString("tripId");
+////                                jointList.add(tripid);
+//                            }
+//                        }
+//
+//                    }
+//                });
+
+        db.collection("trip")
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(DocumentSnapshot documentSnapshot: task.getResult()){
-                                String tripid= documentSnapshot.getString("tripId");
-                                jointList.add(tripid);
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+//                                Log.d("demo", "" + queryDocumentSnapshot.getData().toString());
+//                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("latitude"));
+//                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("longitude"));
+//                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("Emailofuser"));
+//                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("title"));
+//                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("url"));
+                                Log.d("demo", "onComplete: "+queryDocumentSnapshot.get("addedUsers"));
+
+                                String[] addedUsers = queryDocumentSnapshot.getString("addedUsers").split(",");
+                                Log.d("demo", "USERS "+addedUsers[0]);
+
+
+
+
+
+
                             }
                         }
-
                     }
                 });
 
@@ -84,29 +113,29 @@ public class MyTrips extends AppCompatActivity {
 //        });
 
 
-        db.collection("trip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                QuerySnapshot querySnapshot = task.getResult();
-
-                if(!querySnapshot.isEmpty()) {
-                    List<DocumentSnapshot> trips = querySnapshot.getDocuments();
-                    for(int i =0; i<trips.size();i++){
-                        for(int j=0; j<jointList.size();j++){
-                            if(trips.get(i).getString("Emailofuser").equals(loggedUser.email) && jointList.contains(trips.get(i).getId())){
-                                Trip trip = new Trip(trips.get(i).getString("title"), trips.get(i).getDouble("latitude"), trips.get(i).getDouble("longitude"), trips.get(i).getString("url"));
-                                my_trip_list.add(trip);
-                            }
-                        }
-
-                    }
-                    ListView lvmytrips = findViewById(R.id.lvtrips);
-                    MyTripAdapter adapter = new MyTripAdapter(MyTrips.this, R.layout.activity_trip_details,my_trip_list);
-                    lvmytrips.setAdapter(adapter);
-
-                }
-            }
-        });
+//        db.collection("trip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                QuerySnapshot querySnapshot = task.getResult();
+//
+//                if(!querySnapshot.isEmpty()) {
+//                    List<DocumentSnapshot> trips = querySnapshot.getDocuments();
+//                    for(int i =0; i<trips.size();i++){
+//                        for(int j=0; j<jointList.size();j++){
+//                            if(trips.get(i).getString("Emailofuser").equals(loggedUser.email) && jointList.contains(trips.get(i).getId())){
+//                                Trip trip = new Trip(trips.get(i).getString("title"), trips.get(i).getDouble("latitude"), trips.get(i).getDouble("longitude"), trips.get(i).getString("url"));
+//                                my_trip_list.add(trip);
+//                            }
+//                        }
+//
+//                    }
+//                    ListView lvmytrips = findViewById(R.id.lvtrips);
+//                    MyTripAdapter adapter = new MyTripAdapter(MyTrips.this, R.layout.activity_trip_details,my_trip_list);
+//                    lvmytrips.setAdapter(adapter);
+//
+//                }
+//            }
+//        });
 
 //        db.collection("trip").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //            @Override

@@ -1,6 +1,7 @@
 package com.example.tripplanner;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
         viewHolder.textViewName.setText(user.first+" "+user.last);
         viewHolder.textViewGender.setText(user.gender);
         viewHolder.textViewEmail.setText(user.email);
+        Log.d("demo", "getView: "+user.avatar);
         switch(user.avatar){
             case "male1":
                 viewHolder.iv.setImageResource(male1);

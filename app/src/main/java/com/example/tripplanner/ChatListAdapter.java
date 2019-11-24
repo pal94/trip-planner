@@ -1,6 +1,7 @@
 package com.example.tripplanner;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ public class ChatListAdapter extends ArrayAdapter<User> {
         }
 
         viewHolder.textViewName.setText(user.first + " " + user.last);
+
+        Log.d("demo", "getView: "+user.avatar);
 
         switch (user.avatar) {
             case "male1":

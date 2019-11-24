@@ -48,6 +48,9 @@ public class CreateATrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_atrip);
+
+        getSupportActionBar().setTitle("Create A Trip");
+
         url = "https://toomanyadapters.com/wp-content/uploads/2018/08/St.-Pauls-Cathedral-864x576.jpg";
 
         prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
