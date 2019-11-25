@@ -3,13 +3,17 @@ package com.example.tripplanner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +27,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +36,7 @@ public class CreateATrip extends AppCompatActivity {
     EditText tvTitle;
     EditText tvlatitude;
     EditText tvlongitude;
+    TextView textViewDate;
     ImageView coverpic;
     User loggedUser;
     Gson gson = new Gson();
@@ -41,7 +47,7 @@ public class CreateATrip extends AppCompatActivity {
     SharedPreferences.Editor editor;
     ArrayList<String> emails = new ArrayList<>();
 
-    String tripId;
+    String date;
     String emailofuser;
 
 
@@ -65,6 +71,27 @@ public class CreateATrip extends AppCompatActivity {
         tvlatitude=findViewById(R.id.tvlatitude);
         tvlongitude=findViewById(R.id.tvlongitude);
         coverpic=findViewById(R.id.coverpic);
+
+        textViewDate = findViewById(R.id.textViewDate);
+        findViewById(R.id.buttonDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateATrip.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        date = month + "/" + dayOfMonth + "/" + year;
+                        Log.d("demo", date);
+                        textViewDate.setText(date);
+                        textViewDate.setVisibility(View.VISIBLE);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         findViewById(R.id.btnCreateTrip).setOnClickListener(new View.OnClickListener() {
             @Override

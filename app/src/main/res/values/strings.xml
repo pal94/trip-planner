@@ -31,4 +31,7 @@
     <string name="Chatbox">Group Chat</string>
     <string name="leave">Leave Trip</string>
     <string name="join">Join Trip</string>
+    <string name="add">Add People</string>
+    <string name="dateBtn">Pick A Date</string>
+    <string name="Date">Date:</string>
 </resources>

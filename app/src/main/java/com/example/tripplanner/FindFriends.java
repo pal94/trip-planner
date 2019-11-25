@@ -35,27 +35,35 @@ public class FindFriends extends AppCompatActivity {
         String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
         loggedUser = gson.fromJson(json, User.class);
 
+//        final Bundle fromAddMovie = getIntent().getExtras().getBundle("tripPage");
+//        user_list = (ArrayList<User>) fromAddMovie.getSerializable("user_list");
+//        if(!getIntent().getExtras().getBundle("tripPage").isEmpty()){
+//            ListView listView = findViewById(R.id.listView);
+//            UserListAdapter adapter = new UserListAdapter(FindFriends.this, R.layout.user_list_item, user_list);
+//            listView.setAdapter(adapter);
+//        } else {
 
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                QuerySnapshot queryDocumentSnapshots = task.getResult();
-                if(!queryDocumentSnapshots.isEmpty()){
-                    List<DocumentSnapshot> users = queryDocumentSnapshots.getDocuments();
+            db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        List<DocumentSnapshot> users = queryDocumentSnapshots.getDocuments();
 
-                    for (int i = 0; i < users.size();i++){
-                        if(!users.get(i).getString("email").equals(loggedUser.email)) {
-                            user = new User(users.get(i).getString("firstName"), users.get(i).getString("lastName"), users.get(i).getString("email"), users.get(i).getString("password"), users.get(i).getString("gender"), users.get(i).getString("avatar"));
-                            user_list.add(user);
+                        for (int i = 0; i < users.size(); i++) {
+                            if (!users.get(i).getString("email").equals(loggedUser.email)) {
+                                user = new User(users.get(i).getString("firstName"), users.get(i).getString("lastName"), users.get(i).getString("email"), users.get(i).getString("password"), users.get(i).getString("gender"), users.get(i).getString("avatar"));
+                                user_list.add(user);
+                            }
                         }
+
+                        ListView listView = findViewById(R.id.listView);
+                        UserListAdapter adapter = new UserListAdapter(FindFriends.this, R.layout.user_list_item, user_list);
+                        listView.setAdapter(adapter);
                     }
-
-                    ListView listView = findViewById(R.id.listView);
-                    UserListAdapter adapter = new UserListAdapter(FindFriends.this,R.layout.user_list_item,user_list);
-                    listView.setAdapter(adapter);
                 }
-            }
-        });
-
+            });
+//        }
     }
+
 }
