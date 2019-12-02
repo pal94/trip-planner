@@ -15,8 +15,6 @@ public class Trips implements Serializable {
                 "creator='" + creator + '\'' +
                 ", title='" + title + '\'' +
                 ", cover_image='" + cover_image + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
                 ", added_users=" + added_users +
                 '}';
     }

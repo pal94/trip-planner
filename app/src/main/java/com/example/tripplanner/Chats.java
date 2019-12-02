@@ -7,6 +7,7 @@ import java.util.List;
 public class Chats implements Serializable {
 
     String id;
+    String tripTitle;
     String message, fname,lname,  avtar;
     String emailofsender;
 

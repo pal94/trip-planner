@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -65,7 +66,7 @@ public class ChatList extends AppCompatActivity {
 
         loggedUser = gson.fromJson(json, User.class);
 
-        db.collection("chats").document(trip.title).collection("messages").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("chats").document(trip.title).collection("messages").orderBy("time", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(queryDocumentSnapshots!=null) {
@@ -73,6 +74,7 @@ public class ChatList extends AppCompatActivity {
                     for (DocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots.getDocuments()) {
                         final Chats list = new Chats();
                         list.id = queryDocumentSnapshot.getId();
+                        list.tripTitle=trip.title;
                         list.time = queryDocumentSnapshot.getString("time");
                         list.message = queryDocumentSnapshot.getString("message");
                         list.emailofsender = queryDocumentSnapshot.getString("emailofSender");
@@ -87,6 +89,7 @@ public class ChatList extends AppCompatActivity {
                                         list.avtar = documentSnapshot.getString("avatar");
                                         chats.add(list);
                                     }
+                                    Log.d("CHATS", chats.toString());
                                     listView = findViewById(R.id.listViewChatList);
                                     ChatListAdapter adapter = new ChatListAdapter(ChatList.this, R.layout.chat_list_item, chats);
                                     listView.setAdapter(adapter);
@@ -122,32 +125,6 @@ public class ChatList extends AppCompatActivity {
 
         final List<User> users = new ArrayList<>();
 
-//        final Bundle chatdata = getIntent().getExtras().getBundle("From Adapter");
-//        chat= (Chats) chatdata.getSerializable("DELETE DETAILS");
-//        Intent intent = getIntent();
-//        if(intent.getStringExtra("ID")!=null){
-//
-//            String id = intent.getStringExtra("ID");
-//
-//            db.collection("chats").document(trip.title).collection("messages").document(id).delete()
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(ChatList.this, "Deleted", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d("Not deleted", e.getMessage());
-//                        }
-//                    }).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    onStart();
-//                }
-//            });
-//        }
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -191,6 +168,7 @@ public class ChatList extends AppCompatActivity {
                 db.collection("chats").document(trip.title).collection("messages").add(messageMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
+                        Log.d("HERE", "I am in save.....");
                         if(task.isSuccessful()){
                             Log.d("MESSAGE", " MessageSaved");
                             messageText.setText(null);
