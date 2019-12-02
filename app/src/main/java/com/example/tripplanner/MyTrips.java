@@ -90,7 +90,6 @@ public class MyTrips extends AppCompatActivity {
                                         trip.date = queryDocumentSnapshot.getString("date");
                                         trip.location = queryDocumentSnapshot.getString("location");
 
-
                                         trip.added_users = addedUsers;
                                         myTrips.add(trip);
                                     }
