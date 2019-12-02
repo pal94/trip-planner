@@ -86,7 +86,6 @@ public class MyTrips extends AppCompatActivity {
                                         trip.cover_image = queryDocumentSnapshot.getString("url");
                                         trip.name = queryDocumentSnapshot.getString("creator");
 
-
                                         trip.added_users = addedUsers;
                                         myTrips.add(trip);
                                     }
