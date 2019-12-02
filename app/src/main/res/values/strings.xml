@@ -35,4 +35,9 @@
     <string name="dateBtn">Pick A Date</string>
     <string name="Date">Date:</string>
     <string name="joiendby">Joined By:</string>
+    <string name="todo">TODO</string>
+    <string name="Location">Location:</string>
+    <string name="selLoc">Select Location</string>
+    <string name="select">Select</string>
+    <string name="search">Search</string>
 </resources>

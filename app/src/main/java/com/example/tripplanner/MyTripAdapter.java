@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static com.example.tripplanner.R.drawable.forest;
+
 public class MyTripAdapter extends ArrayAdapter<Trips> {
 
     public MyTripAdapter(@NonNull Context context, int resource, @NonNull List<Trips> objects) {
@@ -42,8 +44,27 @@ public class MyTripAdapter extends ArrayAdapter<Trips> {
 
         viewHolder.textViewTitle.setText(trips.title);
         viewHolder.textViewCreator.setText(trips.name);
-        Picasso.get().load(trips.cover_image).into(viewHolder.iv);
-
+//        Picasso.get().load(trips.cover_image).into(viewHolder.iv);
+        switch(trips.cover_image){
+            case "forest":
+                viewHolder.iv.setImageResource(forest);
+                break;
+            case "city":
+                viewHolder.iv.setImageResource(R.drawable.city);
+                break;
+            case "camping":
+                viewHolder.iv.setImageResource(R.drawable.camping);
+                break;
+            case "desert":
+                viewHolder.iv.setImageResource(R.drawable.desert);
+                break;
+            case "mountains":
+                viewHolder.iv.setImageResource(R.drawable.mountains);
+                break;
+            case "beach":
+                viewHolder.iv.setImageResource(R.drawable.beach);
+                break;
+        }
 
 
         return convertView;

@@ -25,11 +25,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.tripplanner.R.drawable.forest;
+
 public class FindTripPage extends AppCompatActivity {
 
     private static final String TAG = "demo";
     Trips trip = new Trips();
-    TextView title, creator;
+    TextView title, creator,location,date;
     ImageView iv;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences prefsEditor;
@@ -55,10 +57,15 @@ public class FindTripPage extends AppCompatActivity {
         title = findViewById(R.id.textViewTitleFind);
         creator = findViewById(R.id.textViewCreatedByFind);
         iv = findViewById(R.id.imageViewCover);
+        location = findViewById(R.id.textViewFTLoc);
+        date = findViewById(R.id.textViewFTDate);
 
         title.setText(trip.title);
         creator.setText(trip.name);
-        Picasso.get().load(trip.cover_image).into(iv);
+        location.setText(trip.location);
+        date.setText(trip.date);
+//        Picasso.get().load(trip.cover_image).into(iv);
+        setCover(trip.cover_image);
 
         findViewById(R.id.buttonJoin).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,5 +102,28 @@ public class FindTripPage extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+    }
+
+    private void setCover(String id){
+        switch(id){
+            case "forest":
+                iv.setImageResource(forest);
+                break;
+            case "city":
+                iv.setImageResource(R.drawable.city);
+                break;
+            case "camping":
+                iv.setImageResource(R.drawable.camping);
+                break;
+            case "desert":
+                iv.setImageResource(R.drawable.desert);
+                break;
+            case "mountains":
+                iv.setImageResource(R.drawable.mountains);
+                break;
+            case "beach":
+                iv.setImageResource(R.drawable.beach);
+                break;
+        }
     }
 }

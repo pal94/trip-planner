@@ -60,11 +60,13 @@ public class FindTrips extends AppCompatActivity {
                                     if(addedUsers.isEmpty()){
                                         Trips trip = new Trips();
                                         trip.creator = queryDocumentSnapshot.getString("Emailofuser");
-                                        trip.latitude = queryDocumentSnapshot.getDouble("latitude");
-                                        trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                        trip.latitude = queryDocumentSnapshot.getString("latitude");
+                                        trip.longitude = queryDocumentSnapshot.getString("longitude");
                                         trip.title = queryDocumentSnapshot.getString("title");
                                         trip.cover_image = queryDocumentSnapshot.getString("url");
                                         trip.name = queryDocumentSnapshot.getString("creator");
+                                        trip.location = queryDocumentSnapshot.getString("location");
+                                        trip.date = queryDocumentSnapshot.getString("date");
 
                                         trip.added_users = addedUsers;
                                         myTrips.add(trip);
@@ -74,13 +76,16 @@ public class FindTrips extends AppCompatActivity {
                                         if(!addedUsers.contains(loggedUser.email)) {
                                             Trips trip = new Trips();
                                                 trip.creator = queryDocumentSnapshot.getString("Emailofuser");
-                                                trip.latitude = queryDocumentSnapshot.getDouble("latitude");
-                                                trip.longitude = queryDocumentSnapshot.getDouble("longitude");
+                                                trip.latitude = queryDocumentSnapshot.getString("latitude");
+                                                trip.longitude = queryDocumentSnapshot.getString("longitude");
                                                 trip.title = queryDocumentSnapshot.getString("title");
                                                 trip.cover_image = queryDocumentSnapshot.getString("url");
                                                 trip.name = queryDocumentSnapshot.getString("creator");
+                                                trip.date = queryDocumentSnapshot.getString("date");
+                                                trip.location = queryDocumentSnapshot.getString("location");
 
-                                                trip.added_users = addedUsers;
+
+                                            trip.added_users = addedUsers;
                                                 myTrips.add(trip);
                                         }
                                         }

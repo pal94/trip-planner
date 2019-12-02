@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -77,31 +78,35 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 gender = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
 
-                Log.d("demo", "onCreate: "+gender.getText().toString());
+                if (gender==null || fname.getText().equals("") || lname.getText().equals("") || email.getText().equals("") || pass.getText().equals("") || repass.getText().equals("") || avatar==null) {
+                    Toast.makeText(SignUp.this, "MISSING INFORMATION", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("demo", "onCreate: " + gender.getText().toString());
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("firstName",fname.getText().toString());
-                user.put("lastName",lname.getText().toString());
-                user.put("email",email.getText().toString());
-                user.put("password",pass.getText().toString());
-                user.put("gender",gender.getText().toString());
-                user.put("avatar",avatar);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("firstName", fname.getText().toString());
+                    user.put("lastName", lname.getText().toString());
+                    user.put("email", email.getText().toString());
+                    user.put("password", pass.getText().toString());
+                    user.put("gender", gender.getText().toString());
+                    user.put("avatar", avatar);
 
-                db.collection("users")
-                        .document(""+email.getText().toString())
-                        .set(user)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    Log.d("demo", "onComplete");
-                                    //write logic here
-                                    finish();
-                                } else {
-                                    Log.d("demo", ""+task.getException().toString());
+                    db.collection("users")
+                            .document("" + email.getText().toString())
+                            .set(user)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("demo", "onComplete");
+                                        //write logic here
+                                        finish();
+                                    } else {
+                                        Log.d("demo", "" + task.getException().toString());
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
 

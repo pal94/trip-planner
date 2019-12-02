@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Trips implements Serializable {
-    String creator,title,cover_image,name;
-    Double latitude,longitude;
+    String creator,title,cover_image,name,latitude,longitude,date,location;
+//    Double latitude,longitude;
     List<String> added_users;
 
     @Override

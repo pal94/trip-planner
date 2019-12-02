@@ -30,11 +30,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.tripplanner.R.drawable.forest;
+
 public class TripPage extends AppCompatActivity {
 
     private static final String TAG = "demo";
     Trips trip = new Trips();
-    TextView title, creator;
+    TextView title, creator,location,date;
     ImageView iv;
     SharedPreferences prefsEditor;
     SharedPreferences.Editor editor;
@@ -58,11 +60,19 @@ public class TripPage extends AppCompatActivity {
 
         title = findViewById(R.id.textViewTitleTrip);
         creator = findViewById(R.id.textViewCreatorName);
+        title = findViewById(R.id.textViewTitleTrip);
+        location = findViewById(R.id.textViewTPLoc);
+        date = findViewById(R.id.textViewTPDate);
         iv = findViewById(R.id.imageViewCoverPic);
+        Log.d(TAG, "onCreate: "+trip.date);
+        Log.d(TAG, "onCreate: "+trip.location);
 
         title.setText(trip.title);
         creator.setText(trip.name);
-        Picasso.get().load(trip.cover_image).into(iv);
+        location.setText(trip.location);
+        date.setText(trip.date);
+//        Picasso.get().load(trip.cover_image).into(iv);
+        setCover(trip.cover_image);
 
         findViewById(R.id.buttonChat).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,5 +165,28 @@ public class TripPage extends AppCompatActivity {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+    }
+
+    private void setCover(String id){
+        switch(id){
+            case "forest":
+                iv.setImageResource(forest);
+                break;
+            case "city":
+                iv.setImageResource(R.drawable.city);
+                break;
+            case "camping":
+                iv.setImageResource(R.drawable.camping);
+                break;
+            case "desert":
+                iv.setImageResource(R.drawable.desert);
+                break;
+            case "mountains":
+                iv.setImageResource(R.drawable.mountains);
+                break;
+            case "beach":
+                iv.setImageResource(R.drawable.beach);
+                break;
+        }
     }
 }

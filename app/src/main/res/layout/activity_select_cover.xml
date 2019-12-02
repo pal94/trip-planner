@@ -6,4 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".SelectCover">
 
+    <ImageView
+        android:id="@+id/imageViewForest"
+        android:layout_width="125dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/forest" />
+
+    <ImageView
+        android:id="@+id/imageViewCamping"
+        android:layout_width="123dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewForest"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewForest"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewForest"
+        app:srcCompat="@drawable/camping" />
+
+    <ImageView
+        android:id="@+id/imageViewCity"
+        android:layout_width="124dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewDesert"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDesert"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewDesert"
+        app:srcCompat="@drawable/city" />
+
+    <ImageView
+        android:id="@+id/imageViewBeach"
+        android:layout_width="125dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCity"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCity"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCity"
+        app:srcCompat="@drawable/beach" />
+
+    <ImageView
+        android:id="@+id/imageViewDesert"
+        android:layout_width="126dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCamping"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCamping"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCamping"
+        app:srcCompat="@drawable/desert" />
+
+    <ImageView
+        android:id="@+id/imageViewMountains"
+        android:layout_width="124dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewBeach"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBeach"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBeach"
+        app:srcCompat="@drawable/mountains" />
 </androidx.constraintlayout.widget.ConstraintLayout>
