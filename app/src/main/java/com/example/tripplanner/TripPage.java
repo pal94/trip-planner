@@ -104,7 +104,7 @@ public class TripPage extends AppCompatActivity {
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(TripPage.this, "YOU BACKED OUT", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(TripPage.this, "YOU BACKED OUT", Toast.LENGTH_SHORT).show();
 
                         }
                     });

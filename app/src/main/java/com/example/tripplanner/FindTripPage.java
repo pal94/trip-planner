@@ -64,7 +64,6 @@ public class FindTripPage extends AppCompatActivity {
         creator.setText(trip.name);
         location.setText(trip.location);
         date.setText(trip.date);
-//        Picasso.get().load(trip.cover_image).into(iv);
         setCover(trip.cover_image);
 
         findViewById(R.id.buttonJoin).setOnClickListener(new View.OnClickListener() {
