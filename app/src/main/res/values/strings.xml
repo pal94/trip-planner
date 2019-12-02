@@ -27,11 +27,12 @@
     <string name="send">Send</string>
     <string name="chatbox">Enter message</string>
     <string name="createdBy">Created By:</string>
-    <string name="map">Open Map</string>
+    <string name="map">Show In Map</string>
     <string name="Chatbox">Group Chat</string>
     <string name="leave">Leave Trip</string>
     <string name="join">Join Trip</string>
     <string name="add">Add People</string>
     <string name="dateBtn">Pick A Date</string>
     <string name="Date">Date:</string>
+    <string name="joiendby">Joined By:</string>
 </resources>

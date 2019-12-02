@@ -24,7 +24,6 @@ public class FindFriends extends AppCompatActivity {
     ArrayList<User> user_list = new ArrayList<>();
     Gson gson = new Gson();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,38 +31,16 @@ public class FindFriends extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Find Friends");
 
-        String json = getSharedPreferences("loggedUser",MODE_PRIVATE).getString("userObject","");
+        String json = getSharedPreferences("loggedUser", MODE_PRIVATE).getString("userObject", "");
         loggedUser = gson.fromJson(json, User.class);
 
-//        final Bundle fromAddMovie = getIntent().getExtras().getBundle("tripPage");
-//        user_list = (ArrayList<User>) fromAddMovie.getSerializable("user_list");
-//        if(!getIntent().getExtras().getBundle("tripPage").isEmpty()){
-//            ListView listView = findViewById(R.id.listView);
-//            UserListAdapter adapter = new UserListAdapter(FindFriends.this, R.layout.user_list_item, user_list);
-//            listView.setAdapter(adapter);
-//        } else {
+        final Bundle bundle = getIntent().getExtras().getBundle("fromTrip");
+        user_list = (ArrayList<User>) bundle.getSerializable("list");
 
-            db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    QuerySnapshot queryDocumentSnapshots = task.getResult();
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        List<DocumentSnapshot> users = queryDocumentSnapshots.getDocuments();
+        ListView listView = findViewById(R.id.listView);
+        UserListAdapter adapter = new UserListAdapter(FindFriends.this, R.layout.user_list_item, user_list);
+        listView.setAdapter(adapter);
 
-                        for (int i = 0; i < users.size(); i++) {
-                            if (!users.get(i).getString("email").equals(loggedUser.email)) {
-                                user = new User(users.get(i).getString("firstName"), users.get(i).getString("lastName"), users.get(i).getString("email"), users.get(i).getString("password"), users.get(i).getString("gender"), users.get(i).getString("avatar"));
-                                user_list.add(user);
-                            }
-                        }
-
-                        ListView listView = findViewById(R.id.listView);
-                        UserListAdapter adapter = new UserListAdapter(FindFriends.this, R.layout.user_list_item, user_list);
-                        listView.setAdapter(adapter);
-                    }
-                }
-            });
-//        }
     }
 
 }
