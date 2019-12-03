@@ -9,18 +9,19 @@
     <Button
         android:id="@+id/buttonCreateTrip"
         android:layout_width="255dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="88dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="136dp"
         android:text="@string/btncreate"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
 
     <Button
         android:id="@+id/buttonFindTrips"
         android:layout_width="253dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:text="@string/btnfind"
         android:textSize="14sp"
@@ -29,21 +30,9 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonCreateTrip" />
 
     <Button
-        android:id="@+id/buttonFindFriends"
-        android:layout_width="253dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/btnFindFriend"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonMyTrips"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonMyTrips"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMyTrips" />
-
-    <Button
         android:id="@+id/buttonMyTrips"
         android:layout_width="253dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:text="@string/mytrips"
         android:textSize="14sp"

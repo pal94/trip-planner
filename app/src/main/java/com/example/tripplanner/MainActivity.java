@@ -50,70 +50,41 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Button signInbutton;
-    int RC_SIGN_IN = 100;
     EditText email, pass;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences prefsEditor;
     SharedPreferences.Editor editor;
     Gson gson = new Gson();
     String TAG = "demo";
-    GoogleSignInClient mGoogleSignInClient;
-    String personName, personGivenName, personFamilyName, personEmail,personId;
-    Uri personPhoto;
 
-//    @Override
-//    protected void onStart() {
-//
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//        updateUI(account);
-//        super.onStart();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        createChats();
-//        Date date= new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        Log.d(TAG, "onCreate: "+formatter.format(date));
-//        Log.d(TAG, "onCreate: "+date);
-
-
-
-
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
         email = findViewById(R.id.editTextEmail);
         prefsEditor = getSharedPreferences("loggedUser", MODE_PRIVATE);
         editor = prefsEditor.edit();
 
         if (!getSharedPreferences("loggedUser", MODE_PRIVATE).getString("userObject", "").isEmpty()) {
-            Intent intent = new Intent(MainActivity.this,Dashboard.class);
+            Intent intent = new Intent(MainActivity.this, Dashboard.class);
             startActivity(intent);
             finish();
         }
 
 
-            email = findViewById(R.id.editTextEmail);
+        email = findViewById(R.id.editTextEmail);
         pass = findViewById(R.id.editTextPassword);
 
         findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!email.getText().equals("")||!pass.getText().equals("")){
-                    checkUser(email.getText().toString(),pass.getText().toString());
+                if (!email.getText().equals("") || !pass.getText().equals("")) {
+                    checkUser(email.getText().toString(), pass.getText().toString());
                 }
             }
         });
-
 
 
         findViewById(R.id.buttonSignUp).setOnClickListener(new View.OnClickListener() {
@@ -123,86 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signIn();
-//
-//            }
-//        });
-
-
     }
-
-//    private void signIn() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
-//    public void  updateUI(GoogleSignInAccount account){
-//        if(account != null){
-//            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
-//            final GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getBaseContext());
-//            if (acct != null) {
-//                personName = acct.getDisplayName();
-//                personGivenName = acct.getGivenName();
-//                personFamilyName = acct.getFamilyName();
-//                personEmail = acct.getEmail();
-//                personId = acct.getId();
-//                personPhoto = acct.getPhotoUrl();
-//            }
-//
-//
-//
-//            Map<String, Object> authMap = new HashMap<>();
-//            authMap.put("firstname",personGivenName);
-//            authMap.put("lastName",personFamilyName);
-//            authMap.put("email",personEmail);
-//            authMap.put("personId",personId);
-//            //authMap.put("personPhoto", personPhoto);
-//            db.collection("users").document(personEmail).
-//              set(authMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    User user=new User(personGivenName, personFamilyName, personEmail, "ABCD", "M", "male1");
-//                    String json = gson.toJson(user);
-//                    editor.putString("userObject", json);
-//                    editor.commit();
-//                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
-//                    startActivity(intent);
-//                }
-//            });
-//        }else {
-//            Toast.makeText(this,"U Didnt signed in",Toast.LENGTH_LONG).show();
-//        }
-//    }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            // The Task returned from this call is always completed, no need to attach
-//            // a listener.
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            handleSignInResult(task);
-//        }
-//    }
-//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-//        try {
-//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-//
-//            // Signed in successfully, show authenticated UI.
-//            updateUI(account);
-//        } catch (ApiException e) {
-//            // The ApiException status code indicates the detailed failure reason.
-//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//            updateUI(null);
-//        }
-//    }
-
 
     public void checkUser(String email,String pass){
         final String password = pass;
@@ -214,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-//                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//                            Log.d(TAG, "onComplete: "+document.getString("password"));
                             if(document.getString("password").equals(password)){
                                 User user = new User(document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("password"),document.getString("gender"),document.getString("avatar"));
 
@@ -241,34 +131,4 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void createChats(){
-
-        Date date= new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
-        Map<String, Object> chat = new HashMap<>();
-        chat.put("time",formatter.format(date));
-        chat.put("message","How does 12th December sound?");
-        chat.put("from","priya@test.dev");
-
-        db.collection("chats")
-                .document("priya@test.dev")
-                .collection("messages")
-                .document("shrav@test.dev")
-                .collection("messages")
-                .document(""+formatter.format(date))
-                .set(chat)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Log.d("demo", "onComplete");
-                            //write logic here
-                            finish();
-                        } else {
-                            Log.d("demo", ""+task.getException().toString());
-                        }
-                    }
-                });
-    }
 }

@@ -19,7 +19,6 @@
         <activity android:name=".FindTripPage" />
         <activity android:name=".TripPage" />
         <activity android:name=".ChatList" />
-        <activity android:name=".FindFriends" />
         <activity android:name=".SelectAvatar" />
         <activity android:name=".FindTrips" />
         <activity android:name=".MyTrips" />

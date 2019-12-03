@@ -64,53 +64,95 @@ public class MyTrips extends AppCompatActivity {
                                 String email = queryDocumentSnapshot.getString("Emailofuser");
                                 List<String> addedUsers = (List<String>) queryDocumentSnapshot.get("addedUsers");
                                 if(email.equals(loggedUser.email)) {
-                                    Trips trip = new Trips();
+                                    final Trips trip = new Trips();
                                     trip.creator = queryDocumentSnapshot.getString("Emailofuser");
                                     trip.latitude = queryDocumentSnapshot.getString("latitude");
                                     trip.longitude = queryDocumentSnapshot.getString("longitude");
                                     trip.title = queryDocumentSnapshot.getString("title");
                                     trip.cover_image = queryDocumentSnapshot.getString("url");
-                                    trip.name = queryDocumentSnapshot.getString("creator");
                                     trip.date = queryDocumentSnapshot.getString("date");
                                     trip.location = queryDocumentSnapshot.getString("location");
-
-
                                     trip.added_users = addedUsers;
-                                    myTrips.add(trip);
+
+                                    db.collection("users").whereEqualTo("email", trip.creator).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                    trip.name = documentSnapshot.getString("firstName")+" "+documentSnapshot.getString("lastName");
+                                                    myTrips.add(trip);
+
+                                                }
+                                                mProgressDialog.dismiss();
+                                                listView = findViewById(R.id.myTripsListView);
+                                                MyTripAdapter adapter = new MyTripAdapter(MyTrips.this,R.layout.trip_list_item,myTrips);
+                                                listView.setAdapter(adapter);
+
+                                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                    @Override
+                                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                        Intent intent = new Intent(MyTrips.this,TripPage.class);
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putSerializable("trip", myTrips.get(position));
+                                                        intent.putExtra("tripData", bundle);
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
                                 }
                                 for(String userEmail:addedUsers){
                                     if(userEmail.equals(loggedUser.email)){
-                                        Trips trip = new Trips();
+                                        final Trips trip = new Trips();
                                         trip.creator = queryDocumentSnapshot.getString("Emailofuser");
                                         trip.latitude = queryDocumentSnapshot.getString("latitude");
                                         trip.longitude = queryDocumentSnapshot.getString("longitude");
                                         trip.title = queryDocumentSnapshot.getString("title");
                                         trip.cover_image = queryDocumentSnapshot.getString("url");
-                                        trip.name = queryDocumentSnapshot.getString("creator");
+//                                        trip.name = queryDocumentSnapshot.getString("creator");
                                         trip.date = queryDocumentSnapshot.getString("date");
                                         trip.location = queryDocumentSnapshot.getString("location");
-
                                         trip.added_users = addedUsers;
-                                        myTrips.add(trip);
+//                                        myTrips.add(trip);
+
+                                        db.collection("users").whereEqualTo("email", trip.creator).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                        trip.name = documentSnapshot.getString("firstName")+" "+documentSnapshot.getString("lastName");
+                                                        myTrips.add(trip);
+
+                                                    }
+                                                    mProgressDialog.dismiss();
+                                                    listView = findViewById(R.id.myTripsListView);
+                                                    MyTripAdapter adapter = new MyTripAdapter(MyTrips.this,R.layout.trip_list_item,myTrips);
+                                                    listView.setAdapter(adapter);
+
+                                                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                        @Override
+                                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                            Intent intent = new Intent(MyTrips.this,TripPage.class);
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putSerializable("trip", myTrips.get(position));
+                                                            intent.putExtra("tripData", bundle);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             }
                         }
-                        mProgressDialog.dismiss();
-                        listView = findViewById(R.id.myTripsListView);
-                        MyTripAdapter adapter = new MyTripAdapter(MyTrips.this,R.layout.trip_list_item,myTrips);
-                        listView.setAdapter(adapter);
+//                        mProgressDialog.dismiss();
+//                        listView = findViewById(R.id.myTripsListView);
+//                        MyTripAdapter adapter = new MyTripAdapter(MyTrips.this,R.layout.trip_list_item,myTrips);
+//                        listView.setAdapter(adapter);
+//
 
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent intent = new Intent(MyTrips.this,TripPage.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("trip", myTrips.get(position));
-                                intent.putExtra("tripData", bundle);
-                                startActivity(intent);
-                            }
-                        });
                     }
                 });
 

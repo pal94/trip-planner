@@ -72,14 +72,6 @@ public class Dashboard extends AppCompatActivity {
         iv = findViewById(R.id.imageViewProfile);
         setAvatar(loggedUser.avatar);
 
-        findViewById(R.id.buttonFindFriends).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Dashboard.this,FindFriends.class);
-                startActivity(intent);
-            }
-        });
-
         findViewById(R.id.buttonCreateTrip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
