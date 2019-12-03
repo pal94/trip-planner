@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,23 @@ import java.util.List;
 
 import static com.example.tripplanner.R.drawable.male1;
 
+
 public class ChatListAdapter extends ArrayAdapter<Chats> {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Chats chats;
     Trips trips = new Trips();
+    ArrayList<Chats> chat_list;
+    ListView mliv;
+    String id;
 
     public ChatListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Chats> objects) {
         super(context, resource, objects);
+        chat_list=objects;
+    }
+
+    @Override
+    public int getCount() {
+       return chat_list.size();
     }
 
     @NonNull
@@ -44,7 +55,6 @@ public class ChatListAdapter extends ArrayAdapter<Chats> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         chats = getItem(position);
         final ViewHolder viewHolder;
-
         //convertView uses recycled views (views that arent on the screen)
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.chat_list_item, parent, false);
@@ -57,61 +67,41 @@ public class ChatListAdapter extends ArrayAdapter<Chats> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Toast.makeText(v.getContext(), "LONG CLICKED", Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Confirm Action")
-                        .setMessage("Do you want to delete the message?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "YOU WANT TO DELETE", Toast.LENGTH_SHORT).show();
-                                //deleteTrip();
-                                db.collection("chats").document(chats.tripTitle).collection("messages").document().delete()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("INSIDE", "DELETE"+ chats.id);
-                                        remove(chats);
-                                        notifyDataSetChanged();
-                                    }
-                                });
-                            }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "YOU BACKED OUT", Toast.LENGTH_SHORT).show();
+                id=chat_list.get(position).id;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Confirm Action")
+                            .setMessage("Do you want to delete the message?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(getContext(), "YOU WANT TO DELETE", Toast.LENGTH_SHORT).show();
+                                    //deleteTrip();
 
-                    }
-                });
+                                    db.collection("chats").document(chats.tripTitle).collection("messages").document(id).delete()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    Log.d("INSIDE", "DELETE"+ chats.id);
+                                                    remove(chats);
+                                                    notifyDataSetChanged();
+                                                }
+                                            });
+                                }
+                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), "YOU BACKED OUT", Toast.LENGTH_SHORT).show();
 
-                AlertDialog alert = builder.create();
-                alert.show();
-//                db.collection("chats").document(chats.tripTitle).collection("messages").document(chats.id).delete()
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d("EXCEPTION", e.getMessage());
-//                    }
-//                }).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        remove(chats);
-//                        notifyDataSetChanged();
-//                    }
-//                });
-//                Intent intent = new Intent(v.getContext(), ChatList.class);
-//                intent.putExtra("ID", chats.id);
-//                Log.d("clicked", chats.id + chats.emailofsender);
-//                v.getContext().startActivity(intent);
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
                 return false;
             }
         });

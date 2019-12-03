@@ -66,7 +66,7 @@ public class ChatList extends AppCompatActivity {
 
         loggedUser = gson.fromJson(json, User.class);
 
-        db.collection("chats").document(trip.title).collection("messages").orderBy("time", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("chats").document(trip.title).collection("messages").orderBy("time", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(queryDocumentSnapshots!=null) {
